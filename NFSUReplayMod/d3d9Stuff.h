@@ -1,3 +1,4 @@
+#pragma once
 #include "stdafx.h"
 #include <d3d9.h>
 #include <D3dx9core.h>
@@ -7,16 +8,19 @@ enum IDirect3DDevice9_VmethodsNums {
 	eQueryInterface,
 	eAddRef,
 	eRelease,
+
 	eTestCooperativeLevel,
 	eGetAvailableTextureMem,
 	eEvictManagedResources,
 	eGetDirect3D,
 	eGetDeviceCaps,
+
 	eGetDisplayMode,
 	eGetCreationParameters,
 	eSetCursorProperties,
 	eSetCursorPosition,
 	eShowCursor,
+
 	eCreateAdditionalSwapChain,
 	eGetSwapChain,
 	eGetNumberOfSwapChains,
@@ -45,21 +49,21 @@ enum IDirect3DDevice9_VmethodsNums {
 	eGetRenderTarget,
 	eSetDepthStencilSurface,
 	eGetDepthStencilSurface,
-	eBeeeginScene,
-	eEendScene,
-	eCelear,
-	eSeetTransform,
-	eGeetTransform,
-	eMeultiplyTransform,
-	eSeetViewport,
-	eGeetViewport,
-	eSeetMaterial,
-	eGeetMaterial,
-	eSeetLight,
-	eGeetLight,
+	eBeginScene,
+	eEndScene,
+	eClear,
+	eSetTransform,
+	eGetTransform,
+	eMultiplyTransform,
+	eSetViewport,
+	eGetViewport,
+	eSetMaterial,
+	eGetMaterial,
+	eSetLight,
+	eGetLight,
 	eLightEnable,
-	eeGetLightEnable,
-	eeSetClipPlane,
+	eGetLightEnable,
+	eSetClipPlane,
 	eGetClipPlane,
 	eSetRenderState,
 	eGetRenderState,
@@ -124,8 +128,15 @@ enum IDirect3DDevice9_VmethodsNums {
 	eCreateQuery
 };
 
+extern LPD3DXFONT dx_Font;
+
 typedef HRESULT(_stdcall *T_Real_IDirect3DDevice9_EndScene)(IDirect3DDevice9* d3ddevice);
 
 void D3DDrawText(const char* str, LPRECT pos);
-void D3DInitFont(IDirect3DDevice9 *pDevice);
+void D3DReinitFont(IDirect3DDevice9 *pDevice);
 void D3DReleaseFont();
+void D3DXInit();
+void D3DXDeInit();
+
+#define _sprintf_s __sprintf_s
+int __sprintf_s(char* buf, size_t buf_size, const char* format, ...);
