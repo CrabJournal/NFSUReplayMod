@@ -1,5 +1,6 @@
 #pragma once
 #include <intrin.h>
+#include <windows.h>
 
 #define IN
 #define OUT

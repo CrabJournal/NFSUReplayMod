@@ -217,7 +217,7 @@ char msgbuf[msgbufsize] = "";
 
 char currentrplfilename[_MAX_PATH] = "";
 
-HANDLE HFind = NULL;
+HANDLE HFind = INVALID_HANDLE_VALUE;
 WIN32_FIND_DATAA FFD;
 
 void GetNewReplayNamePath(char buf[MAX_PATH]) {
@@ -237,13 +237,13 @@ bool GetNextFILE() {
 void Replayer::ChooseButton() {
 	D3DReinitFont(*ppD3D9Device);
 	char filenamebuf[MAX_PATH];
-	if (HFind != NULL) {
+	if (HFind != INVALID_HANDLE_VALUE) {
 		if (GetNextFILE()) {
 			_strcpy(filenamebuf, FFD.cFileName);
 		}
 		else {
 			FindClose(HFind);
-			HFind = NULL;
+			HFind = INVALID_HANDLE_VALUE;
 			goto l_else;
 		}
 	}
@@ -251,7 +251,6 @@ void Replayer::ChooseButton() {
 	l_else:
 		HFind = FindFirstFileA(filesdir "/*", &FFD);
 		if (HFind == INVALID_HANDLE_VALUE) {
-			HFind = NULL;
 			CreateDirectoryA(filesdir, NULL);
 			return;
 		}
@@ -260,7 +259,7 @@ void Replayer::ChooseButton() {
 				_strcpy(msgbuf, "There's no replays");
 				currentrplfilename[0] = '\0';
 				FindClose(HFind);
-				HFind = NULL;
+				HFind = INVALID_HANDLE_VALUE;
 				return;
 			}
 		}
@@ -555,9 +554,9 @@ void Replayer::StartRec(R_RaceType type, int ugracenumber) {
 	data.resize(0);
 }
 void Replayer::StartPlay() {
-	if (HFind != NULL) {
+	if (HFind != INVALID_HANDLE_VALUE) {
 		FindClose(HFind);
-		HFind = NULL;
+		HFind = INVALID_HANDLE_VALUE;
 	}
 	if (LoadCurrentReplay() == false) {
 		return;

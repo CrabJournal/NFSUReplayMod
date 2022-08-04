@@ -38,11 +38,12 @@ T_nh_malloc* const B_nh_malloc = (T_nh_malloc*)&ToReplace[4].backup;
 void** const B_InitFERaceEvent = (void**)&ToReplace[5].backup;
 //void** const B_Steering = (void**)&ToReplace[7].backup;
 
+
 //void __declspec(naked) __stdcall SomeSteeringHook(/*esi - this, */ float val, float time /*also eax*/, DWORD) {
 //	__asm {
 //		shl eax, 1
 //		test eax, eax
-//		je loc_ret
+//		je loc_ret				// jump if (time == -0.0 || time == 0.0)
 //		mov eax, B_Steering
 //		jmp [eax]
 //
@@ -123,7 +124,8 @@ void BeforeFEUpdate() {
 	if (GetAsyncKeyState(settings.buttons[Buttons::button_save])) {
 		replayer.Save();
 	}
-	if (*_GameFlowState == GameFlowState::GAMEFLOW_STATE_IN_FRONTEND) {
+
+	if (*GameFlowState_ == GameFlowState::GAMEFLOW_STATE_IN_FRONTEND) {
 		if (GetAsyncKeyState(settings.buttons[Buttons::button_choose]) & 1) {
 			replayer.ChooseButton();
 		}
@@ -140,6 +142,7 @@ HRESULT _stdcall HookEndScene(IDirect3DDevice9* d3ddevice) {
 	D3DDrawText(msgbuf, &stockrect);
 	return d3ddevice->EndScene();
 }
+
 
 HRESULT BeforeReset() {
 	LPD3DXFONT old = dx_Font;

@@ -68,7 +68,7 @@ bool HVector::Read(void *data, size_t _size, size_t offset) {
 void* HVector::VirtualRead(size_t _size) {
 	void *res = GetMemPtr(_reader_offset);
 #ifdef _DEBUG
-	if (reader_ptr + _size > size()) {
+	if (_reader_offset + _size > size()) {
 		return nullptr;
 	}
 #endif

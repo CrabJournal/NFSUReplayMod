@@ -31,3 +31,7 @@ void RotationToRotationMatrix(float Matrix[4][4], const vector3* rotation) {
 	Matrix[2][1] = rbXZ.z;
 	Matrix[2][2] = ucosY * coss.z;
 }
+
+__m128 foo(float *f, float* f2) {
+	return _mm_add_ps(*(__m128*)f, *(__m128*)f2);
+}

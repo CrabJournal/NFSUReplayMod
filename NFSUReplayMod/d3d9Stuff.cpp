@@ -67,7 +67,6 @@ void D3DReleaseFont() {
 	if (dx_Font) {
 		dx_Font->Release();
 		dx_Font = NULL;
-		IDirect3DIndexBuffer9* b;
 	}
 }
 
@@ -77,6 +76,10 @@ void D3DInitFont(IDirect3DDevice9 *pDevice) {
 			OUT_TT_ONLY_PRECIS, PROOF_QUALITY, DEFAULT_PITCH | FF_DONTCARE, "Arial", &dx_Font) != S_OK) {
 			// __asm int 3
 			// error
+			char buf_t[256];
+			_sprintf_s(buf_t, 256, "D3DXCreateFontA fails, pDevice=%p", pDevice);
+			MessageBoxA(0, buf_t, "NFSUReplayMod", MB_OK);
+			dx_Font = NULL;
 		}
 }
 
@@ -108,6 +111,7 @@ void D3DXInit() {
 			}
 		}
 	}
+
 	__D3DXCreateFontA = __D3DXCreateFontA_bypass;
 }
 

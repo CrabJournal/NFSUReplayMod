@@ -105,6 +105,7 @@ struct FEngine {
 
 	// +0x84
 	// +0xD4 number (of iterations)
+	// +0x10C - cFEng
 	// +0x4114 FEList with FESomeObject's
 
 };
@@ -249,7 +250,7 @@ enum TextFormat {
 struct FEString : FEObject {
 	char *alt_name;				// +0x58 / or something
 	DWORD alt_name_hash;		// +0x5C
-	char* mbTranslatedString;	// +0x60 / mb UTF-8 or UTF-16 size 0x20 (not const), from 0x50410A
+	char* mbTranslatedString;	// +0x60 (0x68 in Ug2) / mb UTF-8 or UTF-16 size 0x20 (not const), from 0x50410A, 
 	int mbMaxLenght;			// +0x64 / 
 	TextFormat format;			// +0x68
 	BYTE unk0x6C[0x8];			// +0x6C / =0
@@ -315,6 +316,7 @@ struct FEunk2 {
 // inhirited from FENode
 // size 0xA0, vtlb 0x6C17F4
 struct FEPackage {
+	// +0x1C control mask
 	void* vtlb;
 	FEPackage* mbNext;			// +0x4
 	FEPackage* mbPrev;			// +0x8
